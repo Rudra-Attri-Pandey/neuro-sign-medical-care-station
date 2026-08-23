@@ -1,0 +1,1675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Neuro Sign | Assistive Care Station - Developed by Rudra Attri Pandey</title>
+  
+  <!-- Modern Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root {
+      --bg-dark: #070c14;
+      --bg-card: rgba(13, 22, 38, 0.75);
+      --bg-card-hover: rgba(18, 30, 52, 0.85);
+      --border-glow: rgba(0, 229, 255, 0.18);
+      --border-active: rgba(0, 229, 255, 0.5);
+      
+      --cyan-glow: #00e5ff;
+      --cyan-dark: #0097a7;
+      --emerald: #00e676;
+      --emerald-glow: rgba(0, 230, 118, 0.25);
+      --alert-red: #ff1744;
+      --alert-red-glow: rgba(255, 23, 68, 0.35);
+      --amber: #ffab00;
+      --purple: #d500f9;
+      
+      --text-main: #f0f6fc;
+      --text-muted: #8b9bb4;
+      --text-dim: #4f637e;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-dark);
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(0, 229, 255, 0.04) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(213, 0, 249, 0.03) 0%, transparent 40%),
+        radial-gradient(circle at 50% 50%, rgba(0, 230, 118, 0.02) 0%, transparent 50%);
+      color: var(--text-main);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Top Navigation Bar */
+    header {
+      background: rgba(10, 17, 30, 0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-glow);
+      padding: 14px 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-icon {
+      width: 44px;
+      height: 44px;
+      background: linear-gradient(135deg, #00e5ff, #0091ea);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      color: #05101a;
+      box-shadow: 0 0 20px rgba(0, 229, 255, 0.4);
+    }
+
+    .brand-text h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      background: linear-gradient(90deg, #ffffff, #80d8ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .brand-text p {
+      font-size: 11px;
+      color: var(--cyan-glow);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      font-weight: 600;
+    }
+
+    .header-status {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    /* USB Port Selector Group */
+    .port-selector-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(13, 22, 38, 0.9);
+      border: 1px solid var(--border-glow);
+      padding: 4px 8px 4px 12px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Language Selector Group */
+    .lang-selector-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(13, 22, 38, 0.9);
+      border: 1px solid var(--border-glow);
+      padding: 4px 10px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    }
+
+    #langSelect {
+      background: transparent;
+      border: none;
+      color: var(--text-main);
+      font-family: 'Outfit', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      outline: none;
+      cursor: pointer;
+      padding: 6px 4px;
+    }
+
+    #langSelect option {
+      background: #0a111e;
+      color: #fff;
+      padding: 8px;
+    }
+
+    .select-wrapper {
+      display: flex;
+      align-items: center;
+    }
+
+    #portSelect {
+      background: transparent;
+      border: none;
+      color: var(--text-main);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      font-weight: 500;
+      padding: 6px 10px 6px 0;
+      outline: none;
+      cursor: pointer;
+      min-width: 140px;
+      max-width: 220px;
+    }
+
+    #portSelect option {
+      background: #0a111e;
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      padding: 8px;
+    }
+
+    .btn-icon {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: var(--text-main);
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-icon:hover {
+      background: rgba(0, 229, 255, 0.2);
+      border-color: var(--cyan-glow);
+      color: #fff;
+    }
+
+    .btn-port-connect {
+      background: linear-gradient(135deg, #00e5ff, #0091ea);
+      border: none;
+      color: #05101a;
+      padding: 7px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: 'Outfit', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-port-connect:hover {
+      box-shadow: 0 0 15px rgba(0, 229, 255, 0.5);
+      transform: translateY(-1px);
+    }
+
+    .btn-port-connect.connected {
+      background: rgba(255, 23, 68, 0.18);
+      border: 1px solid var(--alert-red);
+      color: var(--alert-red);
+    }
+
+    .btn-port-connect.connected:hover {
+      background: var(--alert-red);
+      color: #fff;
+      box-shadow: 0 0 15px rgba(255, 23, 68, 0.5);
+    }
+
+    .status-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(0, 229, 255, 0.08);
+      border: 1px solid var(--border-glow);
+      padding: 6px 14px;
+      border-radius: 30px;
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .pulse-dot {
+      width: 9px;
+      height: 9px;
+      background-color: var(--emerald);
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--emerald);
+      animation: pulseAnimation 1.8s infinite;
+    }
+
+    .pulse-dot.warning {
+      background-color: var(--amber);
+      box-shadow: 0 0 10px var(--amber);
+    }
+
+    @keyframes pulseAnimation {
+      0% { transform: scale(0.95); opacity: 0.8; }
+      50% { transform: scale(1.3); opacity: 1; filter: drop-shadow(0 0 6px var(--emerald)); }
+      100% { transform: scale(0.95); opacity: 0.8; }
+    }
+
+    .btn-header {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--text-main);
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-header:hover {
+      background: rgba(0, 229, 255, 0.15);
+      border-color: var(--cyan-glow);
+      color: #fff;
+    }
+
+    .btn-header.active {
+      background: rgba(0, 230, 118, 0.2);
+      border-color: var(--emerald);
+      color: var(--emerald);
+    }
+
+    /* Main Container Grid */
+    main {
+      padding: 24px 28px;
+      max-width: 1600px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    /* Patient Priority Call Alert Banner */
+    .patient-call-banner {
+      background: linear-gradient(135deg, rgba(255, 23, 68, 0.15), rgba(13, 22, 38, 0.85));
+      border: 1px solid rgba(255, 23, 68, 0.35);
+      border-radius: 18px;
+      padding: 22px 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 25px rgba(255, 23, 68, 0.15);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .patient-call-banner.resting {
+      background: linear-gradient(135deg, rgba(0, 230, 118, 0.08), rgba(13, 22, 38, 0.85));
+      border-color: rgba(0, 230, 118, 0.25);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(0, 230, 118, 0.05);
+    }
+
+    .patient-call-banner.active-call {
+      animation: alertBorderPulse 1.5s infinite alternate;
+    }
+
+    @keyframes alertBorderPulse {
+      0% { border-color: rgba(255, 23, 68, 0.4); box-shadow: 0 0 15px rgba(255, 23, 68, 0.2); }
+      100% { border-color: rgba(255, 23, 68, 0.9); box-shadow: 0 0 35px rgba(255, 23, 68, 0.5); }
+    }
+
+    .call-info {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .call-avatar {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: rgba(255, 23, 68, 0.2);
+      border: 2px solid var(--alert-red);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      color: var(--alert-red);
+    }
+
+    .patient-call-banner.resting .call-avatar {
+      background: rgba(0, 230, 118, 0.15);
+      border-color: var(--emerald);
+      color: var(--emerald);
+    }
+
+    .call-text h2 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+
+    .call-text p {
+      font-size: 14px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .badge-pill {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .badge-emergency {
+      background: var(--alert-red);
+      color: #fff;
+    }
+
+    .badge-normal {
+      background: rgba(0, 230, 118, 0.2);
+      color: var(--emerald);
+      border: 1px solid var(--emerald);
+    }
+
+    .call-controls {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .btn-action {
+      padding: 12px 22px;
+      border-radius: 12px;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+      border: none;
+    }
+
+    .btn-ack {
+      background: linear-gradient(135deg, #00e5ff, #0091ea);
+      color: #05101a;
+      box-shadow: 0 4px 15px rgba(0, 229, 255, 0.3);
+    }
+
+    .btn-ack:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 229, 255, 0.5);
+    }
+
+    .btn-sound-toggle {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text-main);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .btn-sound-toggle:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    /* Grid Layout for Telemetry Sections */
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr 1fr;
+      gap: 24px;
+    }
+
+    @media (max-width: 1200px) {
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .glass-card {
+      background: var(--bg-card);
+      backdrop-filter: blur(14px);
+      border: 1px solid var(--border-glow);
+      border-radius: 18px;
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+      transition: border-color 0.3s ease;
+    }
+
+    .glass-card:hover {
+      border-color: var(--border-active);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      padding-bottom: 12px;
+    }
+
+    .card-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .card-title i {
+      color: var(--cyan-glow);
+    }
+
+    .card-tag {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      background: rgba(255, 255, 255, 0.05);
+      padding: 4px 10px;
+      border-radius: 6px;
+    }
+
+    /* Hand Gesture 3D Visualizer */
+    .orientation-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      padding: 10px 0;
+    }
+
+    .hand-canvas-container {
+      width: 100%;
+      height: 170px;
+      background: rgba(5, 10, 20, 0.7);
+      border-radius: 14px;
+      border: 1px solid rgba(0, 229, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hand-model-3d {
+      width: 90px;
+      height: 110px;
+      background: linear-gradient(135deg, #00e5ff, #2979ff);
+      border-radius: 20px 20px 8px 8px;
+      box-shadow: 0 0 25px rgba(0, 229, 255, 0.5);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #05101a;
+      font-size: 28px;
+      transition: transform 0.15s ease-out;
+      position: relative;
+    }
+
+    .hand-model-3d::after {
+      content: '';
+      position: absolute;
+      top: -8px;
+      width: 16px;
+      height: 18px;
+      background: #00e5ff;
+      border-radius: 6px 6px 0 0;
+      box-shadow: -22px 4px 0 #00e5ff, 22px 4px 0 #00e5ff;
+    }
+
+    .angle-metrics {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      width: 100%;
+      gap: 12px;
+    }
+
+    .angle-pill {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .angle-pill span {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .angle-pill strong {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 18px;
+      color: var(--cyan-glow);
+    }
+
+    /* Mode Status Banner */
+    .mode-indicator {
+      width: 100%;
+      background: rgba(0, 229, 255, 0.08);
+      border: 1px solid var(--border-glow);
+      border-radius: 12px;
+      padding: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .mode-badge {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--cyan-glow);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Home Automation / Relay Controls */
+    .relays-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .relay-item {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      padding: 16px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.25s ease;
+    }
+
+    .relay-item.on {
+      background: rgba(0, 230, 118, 0.08);
+      border-color: rgba(0, 230, 118, 0.3);
+      box-shadow: 0 0 15px rgba(0, 230, 118, 0.1);
+    }
+
+    .relay-meta {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .relay-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.06);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      color: var(--text-muted);
+      transition: all 0.2s ease;
+    }
+
+    .relay-item.on .relay-icon {
+      background: var(--emerald);
+      color: #05101a;
+      box-shadow: 0 0 12px var(--emerald);
+    }
+
+    .relay-label h4 {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .relay-label p {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 52px;
+      height: 28px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(255, 255, 255, 0.15);
+      transition: .3s;
+      border-radius: 34px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 20px;
+      width: 20px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: .3s;
+      border-radius: 50%;
+    }
+
+    input:checked + .slider {
+      background-color: var(--emerald);
+      box-shadow: 0 0 10px var(--emerald);
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(24px);
+      background-color: #05101a;
+    }
+
+    /* Environmental Telemetry Metrics */
+    .climate-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .climate-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .climate-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--text-muted);
+      font-size: 12px;
+    }
+
+    .climate-value {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 26px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .climate-unit {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--cyan-glow);
+    }
+
+    .climate-status {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--emerald);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* ECG Canvas Animation */
+    .ecg-card {
+      grid-column: 1 / -1;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .ecg-container {
+      width: 100%;
+      height: 80px;
+      background: rgba(5, 10, 20, 0.9);
+      border-radius: 12px;
+      border: 1px solid rgba(0, 229, 255, 0.15);
+      position: relative;
+      overflow: hidden;
+    }
+
+    canvas#ecgCanvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* Event Logs Table */
+    .events-card {
+      grid-column: 1 / -1;
+    }
+
+    .events-table-wrapper {
+      max-height: 220px;
+      overflow-y: auto;
+    }
+
+    table.events-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 13px;
+    }
+
+    table.events-table th {
+      color: var(--text-muted);
+      padding: 10px 14px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 11px;
+      letter-spacing: 0.5px;
+    }
+
+    table.events-table td {
+      padding: 12px 14px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      color: var(--text-main);
+    }
+
+    .time-stamp {
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--text-muted);
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <header>
+    <div class="brand">
+      <div class="brand-icon">
+        <i class="fa-solid fa-brain"></i>
+      </div>
+      <div class="brand-text">
+        <h1>NEURO SIGN</h1>
+        <p>Smart Assistive Glove & Telemetry &bull; Developed by Rudra Attri Pandey</p>
+      </div>
+    </div>
+
+    <div class="header-status">
+      <!-- USB Port Selector -->
+      <div class="port-selector-group">
+        <div class="select-wrapper">
+          <i class="fa-brands fa-usb" style="color: var(--cyan-glow); margin-right: 8px;"></i>
+          <select id="portSelect" onchange="onPortSelected()">
+            <option value="">Scanning Ports...</option>
+          </select>
+        </div>
+        <button id="refreshPortsBtn" class="btn-icon" title="Refresh USB Ports" onclick="loadAvailablePorts()">
+          <i class="fa-solid fa-arrows-rotate" id="refreshIcon"></i>
+        </button>
+        <button id="connectBtn" class="btn-port-connect" onclick="togglePortConnection()">
+          <i class="fa-solid fa-link" id="connectIcon"></i> <span id="connectBtnText">Connect</span>
+        </button>
+      </div>
+
+      <div class="status-badge">
+        <div id="connectionDot" class="pulse-dot"></div>
+        <span id="connectionText">Disconnected</span>
+      </div>
+
+      <!-- Language Selector -->
+      <div class="lang-selector-group">
+        <i class="fa-solid fa-language" style="color: var(--cyan-glow); font-size: 16px;"></i>
+        <select id="langSelect" onchange="changeVoiceLanguage()">
+          <option value="en">🇬🇧 English</option>
+          <option value="bn">🇮🇳 বাংলা (Bengali)</option>
+          <option value="hi">🇮🇳 हिंदी (Hindi)</option>
+        </select>
+      </div>
+
+      <button id="simBtn" class="btn-header" onclick="toggleSimulation()">
+        <i class="fa-solid fa-flask"></i> <span id="simBtnText">Demo Simulation</span>
+      </button>
+
+      <button id="audioToggleBtn" class="btn-header active" onclick="toggleVoiceAudio()">
+        <i class="fa-solid fa-volume-high"></i> <span id="voiceBtnText">Voice: ON</span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- Priority Patient Call Banner -->
+    <div id="patientBanner" class="patient-call-banner resting">
+      <div class="call-info">
+        <div id="callAvatar" class="call-avatar">
+          <i id="callIcon" class="fa-solid fa-bed-pulse"></i>
+        </div>
+        <div class="call-text">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <span id="callBadge" class="badge-pill badge-normal">PATIENT STATUS</span>
+            <span id="timeBadge" style="font-size: 12px; color: var(--text-muted); font-family: 'JetBrains Mono';">12:00:00 PM</span>
+          </div>
+          <h2 id="patientMessage">Patient Resting</h2>
+          <p id="patientSubtext"><i class="fa-solid fa-location-dot" style="color: var(--cyan-glow);"></i> <span id="patientTranslation">ICU Bed 04 | Assistive Care</span></p>
+        </div>
+      </div>
+
+      <div class="call-controls">
+        <button class="btn-action btn-ack" onclick="acknowledgeCall()">
+          <i class="fa-solid fa-check-double"></i> Acknowledge Call
+        </button>
+        <button class="btn-action btn-sound-toggle" onclick="testVoice()">
+          <i class="fa-solid fa-play"></i> Test Voice
+        </button>
+      </div>
+    </div>
+
+    <!-- 3-Column Grid Dashboard -->
+    <div class="dashboard-grid">
+      
+      <!-- 1. Smart Glove Gesture & Orientation -->
+      <div class="glass-card">
+        <div class="card-header">
+          <div class="card-title">
+            <i class="fa-solid fa-hand"></i> Smart Glove Gestures
+          </div>
+          <span class="card-tag">MPU-6050 + 3 FLEX</span>
+        </div>
+
+        <div class="orientation-box">
+          <div class="hand-canvas-container">
+            <div id="handModel" class="hand-model-3d">
+              <i class="fa-solid fa-hand-fist"></i>
+            </div>
+          </div>
+
+          <div class="angle-metrics">
+            <div class="angle-pill">
+              <span>ROLL TILT</span>
+              <strong id="rollAngle">0.0°</strong>
+            </div>
+            <div class="angle-pill">
+              <span>PITCH TILT</span>
+              <strong id="pitchAngle">0.0°</strong>
+            </div>
+          </div>
+
+          <div class="mode-indicator">
+            <div>
+              <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Active Glove Mode</div>
+              <div id="gloveModeText" class="mode-badge">Mode 1: Patient Needs</div>
+            </div>
+            <i id="modeIcon" class="fa-solid fa-hospital-user" style="font-size: 20px; color: var(--cyan-glow);"></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Home Appliance / Relay Automation -->
+      <div class="glass-card">
+        <div class="card-header">
+          <div class="card-title">
+            <i class="fa-solid fa-plug-circle-bolt"></i> Home Appliance Control
+          </div>
+          <span class="card-tag">3-CH RELAY</span>
+        </div>
+
+        <div class="relays-list">
+          <!-- Relay 1 -->
+          <div id="relayCard1" class="relay-item">
+            <div class="relay-meta">
+              <div class="relay-icon"><i class="fa-solid fa-lightbulb"></i></div>
+              <div class="relay-label">
+                <h4>Relay 1: Room Light</h4>
+                <p>Pin D3 &bull; <span id="r1Status">OFF</span></p>
+              </div>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="relayToggle1" onchange="toggleRelayServer(1)">
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <!-- Relay 2 -->
+          <div id="relayCard2" class="relay-item">
+            <div class="relay-meta">
+              <div class="relay-icon"><i class="fa-solid fa-fan"></i></div>
+              <div class="relay-label">
+                <h4>Relay 2: Fan / Cooler</h4>
+                <p>Pin D4 &bull; <span id="r2Status">OFF</span></p>
+              </div>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="relayToggle2" onchange="toggleRelayServer(2)">
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <!-- Relay 3 -->
+          <div id="relayCard3" class="relay-item">
+            <div class="relay-meta">
+              <div class="relay-icon"><i class="fa-solid fa-bell"></i></div>
+              <div class="relay-label">
+                <h4>Relay 3: Aux / Call Bell</h4>
+                <p>Pin D5 &bull; <span id="r3Status">OFF</span></p>
+              </div>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="relayToggle3" onchange="toggleRelayServer(3)">
+              <span class="slider"></span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. Room Environmental Telemetry -->
+      <div class="glass-card">
+        <div class="card-header">
+          <div class="card-title">
+            <i class="fa-solid fa-cloud-sun"></i> Room Environment
+          </div>
+          <span class="card-tag">DHT11 + BMP280 + SGP40</span>
+        </div>
+
+        <div class="climate-grid">
+          <!-- Temp -->
+          <div class="climate-card">
+            <div class="climate-header">
+              <span>TEMPERATURE</span>
+              <i class="fa-solid fa-temperature-half" style="color: #ff5252;"></i>
+            </div>
+            <div class="climate-value"><span id="tempVal">24.5</span> <span class="climate-unit">°C</span></div>
+            <div class="climate-status"><i class="fa-solid fa-circle-check"></i> Optimal (20-26°C)</div>
+          </div>
+
+          <!-- Humidity -->
+          <div class="climate-card">
+            <div class="climate-header">
+              <span>HUMIDITY</span>
+              <i class="fa-solid fa-droplet" style="color: #00e5ff;"></i>
+            </div>
+            <div class="climate-value"><span id="humVal">55.0</span> <span class="climate-unit">%</span></div>
+            <div class="climate-status"><i class="fa-solid fa-circle-check"></i> Comfortable (40-60%)</div>
+          </div>
+
+          <!-- Pressure -->
+          <div class="climate-card">
+            <div class="climate-header">
+              <span>AIR PRESSURE</span>
+              <i class="fa-solid fa-gauge-high" style="color: #ffd600;"></i>
+            </div>
+            <div class="climate-value"><span id="pressVal">1013</span> <span class="climate-unit">hPa</span></div>
+            <div class="climate-status"><i class="fa-solid fa-circle-check"></i> Standard Sea Level</div>
+          </div>
+
+          <!-- AQI Air Quality Index -->
+          <div class="climate-card">
+            <div class="climate-header">
+              <span>AIR QUALITY INDEX (AQI)</span>
+              <i class="fa-solid fa-wind" id="aqiIcon" style="color: var(--emerald);"></i>
+            </div>
+            <div class="climate-value"><span id="aqiVal">28</span> <span class="climate-unit">AQI</span></div>
+            <div class="climate-status" id="aqiStatus"><i class="fa-solid fa-circle-check"></i> Good (0-50) Clean Air</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ECG Heartbeat Canvas -->
+      <div class="glass-card ecg-card">
+        <div class="card-header" style="border: none; padding-bottom: 0;">
+          <div class="card-title" style="font-size: 14px;">
+            <i class="fa-solid fa-wave-square" style="color: var(--emerald);"></i> Live Patient Rhythm Monitor
+          </div>
+          <span style="font-family: 'JetBrains Mono'; font-size: 12px; color: var(--emerald);"><i class="fa-solid fa-heart" style="color: #ff1744;"></i> Normal Sinus Rhythm (72 BPM)</span>
+        </div>
+        <div class="ecg-container">
+          <canvas id="ecgCanvas"></canvas>
+        </div>
+      </div>
+
+      <!-- Event Logs History Table -->
+      <div class="glass-card events-card">
+        <div class="card-header">
+          <div class="card-title">
+            <i class="fa-solid fa-clock-rotate-left"></i> Patient Call & Event History
+          </div>
+          <span class="card-tag">REALTIME AUDIT LOG</span>
+        </div>
+
+        <div class="events-table-wrapper">
+          <table class="events-table">
+            <thead>
+              <tr>
+                <th>Timestamp</th>
+                <th>Event Type</th>
+                <th>Patient Request / Action</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="eventLogsBody">
+              <tr>
+                <td class="time-stamp">System Boot</td>
+                <td><span class="badge-pill badge-normal">SYSTEM</span></td>
+                <td>Medical Station Telemetry Initialized</td>
+                <td><span style="color: var(--emerald);"><i class="fa-solid fa-check"></i> Ready</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer style="margin-top: 10px; padding: 16px; text-align: center; border-top: 1px solid rgba(255, 255, 255, 0.06); color: var(--text-muted); font-size: 13px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+      <div>
+        <span style="font-family: 'Outfit'; font-weight: 700; color: var(--cyan-glow); letter-spacing: 0.5px;">NEURO SIGN</span> &bull; Assistive Communication & Smart Automation System
+      </div>
+      <div>
+        Designed & Developed by <strong style="color: #fff; font-weight: 600;">Rudra Attri Pandey</strong>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    let voiceAudioEnabled = true;
+    let lastSpokenMessage = "";
+    let isSimulating = false;
+    let currentLanguage = 'en'; // 'en', 'bn', 'hi'
+
+    // Multilingual Translation Dictionary
+    const TRANSLATIONS = {
+      en: {
+        "I need Water": "Alert: Patient in Bed 4 says: I need water.",
+        "I need Food": "Alert: Patient in Bed 4 says: I need food.",
+        "I need Medicine/Help": "Emergency Alert: Patient in Bed 4 needs medicine and emergency assistance.",
+        "Patient Resting": "Patient is resting normally.",
+        "Waiting for Glove Signal": "Waiting for Smart Glove signal.",
+        "Call Acknowledged": "Patient request acknowledged by caregiver station.",
+        "Voice Activated": "Voice alert system activated in English.",
+        "Voice Muted": "Voice alert system muted.",
+        "USB Connected": "Connected to Arduino USB.",
+        "BedSubtitle": "ICU Bed 04 | Assistive Care",
+        "LangName": "English"
+      },
+      bn: {
+        "I need Water": "জরুরী সতর্কতা: চার নম্বর বেডের রোগীর জল প্রয়োজন।",
+        "I need Food": "জরুরী সতর্কতা: চার নম্বর বেডের রোগীর খাবার প্রয়োজন।",
+        "I need Medicine/Help": "জরুরী সতর্কতা: চার নম্বর বেডের রোগীর ঔষধ ও সাহায্যের প্রয়োজন।",
+        "Patient Resting": "রোগী শান্তিতে বিশ্রাম নিচ্ছেন।",
+        "Waiting for Glove Signal": "স্মার্ট গ্লাভ সিগন্যালের জন্য অপেক্ষা করা হচ্ছে।",
+        "Call Acknowledged": "নার্স স্টেশন থেকে রোগীর কল গ্রহণ করা হয়েছে।",
+        "Voice Activated": "বাংলা ভয়েস অ্যালার্ট সক্রিয় করা হয়েছে।",
+        "Voice Muted": "ভয়েস অ্যালার্ট নিঃশব্দ করা হয়েছে।",
+        "USB Connected": "আর্ডুইনো ইউএসবি সংযুক্ত হয়েছে।",
+        "BedSubtitle": "আইসিইউ বেড ০৪ | সহায়ক যত্ন ব্যবস্থা",
+        "LangName": "বাংলা (Bengali)"
+      },
+      hi: {
+        "I need Water": "सावधान: बेड नंबर चार के मरीज़ को पानी चाहिए।",
+        "I need Food": "सावधान: बेड नंबर चार के मरीज़ को खाना चाहिए।",
+        "I need Medicine/Help": "आपातकालीन चेतावनी: बेड नंबर चार के मरीज़ को दवाई और मदद चाहिए।",
+        "Patient Resting": "मरीज़ आराम कर रहे हैं।",
+        "Waiting for Glove Signal": "स्मार्ट ग्लव सिग्नल की प्रतीक्षा की जा रही है।",
+        "Call Acknowledged": "नर्स स्टेशन द्वारा कॉल स्वीकार कर लिया गया है।",
+        "Voice Activated": "हिंदी वॉयस अलर्ट चालू कर दिया गया है।",
+        "Voice Muted": "वॉयस अलर्ट म्यूट कर दिया गया है।",
+        "USB Connected": "आर्डुइनो यूएसबी कनेक्ट हो गया है।",
+        "BedSubtitle": "आईसीयू बेड ०४ | सहायक देखभाल प्रणाली",
+        "LangName": "हिंदी (Hindi)"
+      }
+    };
+
+    // Web Audio API Hospital Alert Chime Synthesizer
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    let audioCtx = null;
+
+    function playHospitalChime() {
+      if (!voiceAudioEnabled) return;
+      try {
+        if (!audioCtx) audioCtx = new AudioContext();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+
+        const now = audioCtx.currentTime;
+        const osc1 = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+
+        osc1.type = 'sine';
+        osc1.frequency.setValueAtTime(880, now); // A5
+        osc1.frequency.setValueAtTime(1174.66, now + 0.14); // D6
+
+        gain.gain.setValueAtTime(0.25, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.45);
+
+        osc1.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        osc1.start(now);
+        osc1.stop(now + 0.45);
+      } catch (e) {
+        console.warn("Audio chime error:", e);
+      }
+    }
+
+    function getTranslation(key) {
+      const langDict = TRANSLATIONS[currentLanguage] || TRANSLATIONS['en'];
+      return langDict[key] || key;
+    }
+
+    // Multilingual Text-to-Speech Engine
+    function speakText(keyOrCustomText, isDirectText = false) {
+      if (!voiceAudioEnabled || !('speechSynthesis' in window)) return;
+      
+      const textToSpeak = isDirectText ? keyOrCustomText : getTranslation(keyOrCustomText);
+      playHospitalChime();
+      
+      setTimeout(() => {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(textToSpeak);
+        utterance.rate = 0.95;
+        utterance.pitch = 1.05;
+        utterance.volume = 1.0;
+        
+        // Set Language Code
+        if (currentLanguage === 'bn') {
+          utterance.lang = 'bn-IN';
+        } else if (currentLanguage === 'hi') {
+          utterance.lang = 'hi-IN';
+        } else {
+          utterance.lang = 'en-IN';
+        }
+
+        // Auto-detect best installed voice for chosen language
+        const voices = window.speechSynthesis.getVoices();
+        const langPrefix = currentLanguage === 'bn' ? 'bn' : (currentLanguage === 'hi' ? 'hi' : 'en');
+        const matchedVoice = voices.find(v => v.lang.toLowerCase().startsWith(langPrefix));
+        if (matchedVoice) {
+          utterance.voice = matchedVoice;
+        }
+
+        window.speechSynthesis.speak(utterance);
+      }, 200);
+    }
+
+    function changeVoiceLanguage() {
+      const select = document.getElementById('langSelect');
+      currentLanguage = select.value;
+      const langName = TRANSLATIONS[currentLanguage].LangName;
+      speakText("Voice Activated");
+      
+      // Update subtitle translation
+      const transElem = document.getElementById('patientTranslation');
+      if (transElem) {
+        transElem.innerText = TRANSLATIONS[currentLanguage].BedSubtitle;
+      }
+      
+      addLogEntry("CONFIG", `Voice language switched to ${langName}`, "LANG");
+    }
+
+    function toggleVoiceAudio() {
+      voiceAudioEnabled = !voiceAudioEnabled;
+      const btn = document.getElementById('audioToggleBtn');
+      const text = document.getElementById('voiceBtnText');
+      if (voiceAudioEnabled) {
+        btn.classList.add('active');
+        text.innerText = "Voice: ON";
+        speakText("Voice Activated");
+      } else {
+        btn.classList.remove('active');
+        text.innerText = "Voice: MUTED";
+      }
+    }
+
+    function testVoice() {
+      const msg = document.getElementById('patientMessage').innerText;
+      speakText(msg);
+    }
+
+    function toggleSimulation() {
+      fetch('/api/simulation/toggle', { method: 'POST' })
+        .then(res => res.json())
+        .then(data => {
+          isSimulating = data.simulation_active;
+          const btn = document.getElementById('simBtn');
+          const text = document.getElementById('simBtnText');
+          if (isSimulating) {
+            btn.classList.add('active');
+            text.innerText = "Simulation: ON";
+          } else {
+            btn.classList.remove('active');
+            text.innerText = "Demo Simulation";
+          }
+        });
+    }
+
+    function toggleRelayServer(relayId) {
+      fetch(`/api/relay/${relayId}/toggle`, { method: 'POST' })
+        .then(res => res.json())
+        .then(data => {
+          console.log(`Relay ${relayId} toggled:`, data);
+        });
+    }
+
+    function acknowledgeCall() {
+      const banner = document.getElementById('patientBanner');
+      banner.classList.remove('active-call');
+      banner.classList.add('resting');
+      document.getElementById('callBadge').innerText = "ACKNOWLEDGED";
+      document.getElementById('callBadge').className = "badge-pill badge-normal";
+      speakText("Call Acknowledged");
+      addLogEntry("NURSE", "Patient request acknowledged by caregiver", "ACK");
+    }
+
+    function addLogEntry(type, message, status) {
+      const tbody = document.getElementById('eventLogsBody');
+      const row = document.createElement('tr');
+      const timeStr = new Date().toLocaleTimeString();
+
+      const badgeClass = type === 'EMERGENCY' ? 'badge-emergency' : (type === 'APPLIANCE' ? 'badge-normal' : 'badge-normal');
+      
+      row.innerHTML = `
+        <td class="time-stamp">${timeStr}</td>
+        <td><span class="badge-pill ${badgeClass}">${type}</span></td>
+        <td>${message}</td>
+        <td><span style="color: var(--cyan-glow); font-weight: 600;">${status}</span></td>
+      `;
+      tbody.insertBefore(row, tbody.firstChild);
+
+      // Keep max 20 rows
+      if (tbody.children.length > 20) {
+        tbody.removeChild(tbody.lastChild);
+      }
+    }
+
+    // -----------------------------------------------------------------------
+    // USB Port Selection & Connection Handler
+    // -----------------------------------------------------------------------
+    let currentConnectedPort = "";
+    let isPortConnected = false;
+
+    function loadAvailablePorts() {
+      const refreshIcon = document.getElementById('refreshIcon');
+      if (refreshIcon) refreshIcon.classList.add('fa-spin');
+
+      fetch('/api/ports')
+        .then(res => res.json())
+        .then(data => {
+          if (refreshIcon) refreshIcon.classList.remove('fa-spin');
+          const select = document.getElementById('portSelect');
+          select.innerHTML = '';
+
+          if (data.ports && data.ports.length > 0) {
+            data.ports.forEach(p => {
+              const opt = document.createElement('option');
+              opt.value = p.device;
+              opt.innerText = p.label;
+              if (p.device === data.current_port) {
+                opt.selected = true;
+              }
+              select.appendChild(opt);
+            });
+          } else {
+            const opt = document.createElement('option');
+            opt.value = "";
+            opt.innerText = "No USB Device Found";
+            select.appendChild(opt);
+          }
+
+          currentConnectedPort = data.current_port;
+          isPortConnected = data.is_connected;
+          updatePortConnectButton();
+        })
+        .catch(err => {
+          if (refreshIcon) refreshIcon.classList.remove('fa-spin');
+          console.error("Error loading ports:", err);
+        });
+    }
+
+    function onPortSelected() {
+      const select = document.getElementById('portSelect');
+      const selectedPort = select.value;
+      if (selectedPort && selectedPort !== currentConnectedPort) {
+        isPortConnected = false;
+        updatePortConnectButton();
+      }
+    }
+
+    function togglePortConnection() {
+      const select = document.getElementById('portSelect');
+      const selectedPort = select.value;
+
+      if (!selectedPort) {
+        alert("Please select a valid USB / COM port from the list.");
+        return;
+      }
+
+      const btn = document.getElementById('connectBtn');
+      const btnText = document.getElementById('connectBtnText');
+      const icon = document.getElementById('connectIcon');
+
+      if (isPortConnected && selectedPort === currentConnectedPort) {
+        // Disconnect
+        btnText.innerText = "Disconnecting...";
+        fetch('/api/port/disconnect', { method: 'POST' })
+          .then(async res => {
+            try { return await res.json(); } catch(e) { return { success: true }; }
+          })
+          .then(res => {
+            isPortConnected = false;
+            currentConnectedPort = "Disconnected";
+            updatePortConnectButton();
+            addLogEntry("SYSTEM", "USB Serial disconnected by user", "DISCONNECTED");
+          })
+          .catch(err => {
+            isPortConnected = false;
+            updatePortConnectButton();
+          });
+      } else {
+        // Connect
+        btnText.innerText = "Connecting...";
+        fetch('/api/port/connect', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ port: selectedPort })
+        })
+        .then(async res => {
+          const contentType = res.headers.get('content-type') || '';
+          if (contentType.includes('application/json')) {
+            return await res.json();
+          } else {
+            const rawText = await res.text();
+            return { success: false, error: `Server error (${res.status}). Restart medical_station.py` };
+          }
+        })
+        .then(res => {
+          if (res && res.success) {
+            isPortConnected = true;
+            currentConnectedPort = selectedPort;
+            updatePortConnectButton();
+            addLogEntry("SYSTEM", `USB connected to ${selectedPort} @ 115200 baud`, "CONNECTED");
+            speakText(`Connected to Arduino USB on ${selectedPort}`);
+          } else {
+            const errorMsg = (res && res.error) ? res.error : "Failed to connect";
+            alert(`Could not connect to ${selectedPort}:\n\n${errorMsg}\n\nTips:\n1. Make sure Arduino IDE Serial Monitor is CLOSED.\n2. Restart medical_station.py.`);
+            isPortConnected = false;
+            updatePortConnectButton();
+          }
+        })
+        .catch(err => {
+          alert(`Network / Connection error: ${err.message}\nMake sure medical_station.py is running!`);
+          isPortConnected = false;
+          updatePortConnectButton();
+        });
+      }
+    }
+
+    function updatePortConnectButton() {
+      const btn = document.getElementById('connectBtn');
+      const btnText = document.getElementById('connectBtnText');
+      const icon = document.getElementById('connectIcon');
+
+      if (isPortConnected && currentConnectedPort && currentConnectedPort !== "Disconnected" && currentConnectedPort !== "Scanning...") {
+        btn.classList.add('connected');
+        btnText.innerText = "Disconnect";
+        icon.className = "fa-solid fa-unlink";
+      } else {
+        btn.classList.remove('connected');
+        btnText.innerText = "Connect";
+        icon.className = "fa-solid fa-link";
+      }
+    }
+
+    // -----------------------------------------------------------------------
+    // Server-Sent Events (SSE) Live Telemetry Stream
+    // -----------------------------------------------------------------------
+    function connectSSE() {
+      const evtSource = new EventSource('/stream');
+
+      evtSource.onmessage = function(event) {
+        try {
+          const data = JSON.parse(event.data);
+          updateDashboard(data);
+        } catch (err) {
+          console.error("SSE parse error:", err);
+        }
+      };
+
+      evtSource.onerror = function() {
+        document.getElementById('connectionDot').className = "pulse-dot warning";
+        document.getElementById('connectionText').innerText = "Reconnecting...";
+      };
+    }
+
+    function updateDashboard(data) {
+      // 1. Connection Status
+      const connDot = document.getElementById('connectionDot');
+      const connText = document.getElementById('connectionText');
+      if (data.port && data.port !== "Disconnected") {
+        connDot.className = "pulse-dot";
+        connText.innerText = data.is_simulation ? "Demo Simulation Mode" : `USB: ${data.port}`;
+        isPortConnected = true;
+        currentConnectedPort = data.port;
+        updatePortConnectButton();
+      } else {
+        connDot.className = "pulse-dot warning";
+        connText.innerText = data.status_message || "Disconnected";
+        isPortConnected = false;
+        updatePortConnectButton();
+      }
+
+      // 2. Patient Message Banner & Audio Alarm
+      const banner = document.getElementById('patientBanner');
+      const msgElem = document.getElementById('patientMessage');
+      const badge = document.getElementById('callBadge');
+      const avatar = document.getElementById('callAvatar');
+      const icon = document.getElementById('callIcon');
+      const timeBadge = document.getElementById('timeBadge');
+
+      timeBadge.innerText = new Date().toLocaleTimeString();
+      const msg = data.message || "Patient Resting";
+      msgElem.innerText = msg;
+
+      const isCalling = (data.mode === 1 && msg !== "Patient Resting" && msg !== "Waiting for Glove Signal");
+
+      if (isCalling) {
+        banner.classList.remove('resting');
+        banner.classList.add('active-call');
+        badge.innerText = "PRIORITY CALL";
+        badge.className = "badge-pill badge-emergency";
+        icon.className = "fa-solid fa-bell";
+        
+        // Voice Alert Trigger if changed
+        if (lastSpokenMessage !== msg) {
+          lastSpokenMessage = msg;
+          speakText(`Alert: Patient in Bed 4 says: ${msg}`);
+          addLogEntry("EMERGENCY", `Patient requested: "${msg}"`, "ALERT");
+        }
+      } else {
+        if (msg === "Patient Resting") {
+          banner.classList.remove('active-call');
+          banner.classList.add('resting');
+          badge.innerText = "PATIENT RESTING";
+          badge.className = "badge-pill badge-normal";
+          icon.className = "fa-solid fa-bed-pulse";
+          lastSpokenMessage = "";
+        }
+      }
+
+      // 3. Glove 3D Tilt Visualizer
+      const roll = data.roll || 0;
+      const pitch = data.pitch || 0;
+      document.getElementById('rollAngle').innerText = `${roll.toFixed(1)}°`;
+      document.getElementById('pitchAngle').innerText = `${pitch.toFixed(1)}°`;
+      
+      const hand = document.getElementById('handModel');
+      hand.style.transform = `rotate(${roll}deg) perspective(300px) rotateX(${pitch}deg)`;
+
+      // Glove Mode
+      const modeText = document.getElementById('gloveModeText');
+      const modeIcon = document.getElementById('modeIcon');
+      if (data.mode === 2) {
+        modeText.innerText = "Mode 2: Appliance Control (Tilted)";
+        modeText.style.color = "var(--amber)";
+        modeIcon.className = "fa-solid fa-house-signal";
+        modeIcon.style.color = "var(--amber)";
+      } else {
+        modeText.innerText = "Mode 1: Patient Needs (Flat Hand)";
+        modeText.style.color = "var(--cyan-glow)";
+        modeIcon.className = "fa-solid fa-hospital-user";
+        modeIcon.style.color = "var(--cyan-glow)";
+      }
+
+      // 4. Relay Switches
+      updateRelayUI(1, data.relay1, 'relayCard1', 'relayToggle1', 'r1Status');
+      updateRelayUI(2, data.relay2, 'relayCard2', 'relayToggle2', 'r2Status');
+      updateRelayUI(3, data.relay3, 'relayCard3', 'relayToggle3', 'r3Status');
+
+      // 5. Environmental Sensors & AQI calculation
+      if (data.temperature > 0) document.getElementById('tempVal').innerText = data.temperature.toFixed(1);
+      if (data.humidity > 0) document.getElementById('humVal').innerText = data.humidity.toFixed(1);
+      if (data.pressure > 300) document.getElementById('pressVal').innerText = Math.round(data.pressure);
+
+      // AQI Index & Health Status
+      const aqi = data.aqi || 25;
+      const aqiValElem = document.getElementById('aqiVal');
+      const aqiStatusElem = document.getElementById('aqiStatus');
+      const aqiIcon = document.getElementById('aqiIcon');
+
+      aqiValElem.innerText = aqi;
+
+      if (aqi <= 50) {
+        aqiValElem.style.color = "var(--emerald)";
+        aqiIcon.style.color = "var(--emerald)";
+        aqiStatusElem.innerHTML = '<i class="fa-solid fa-circle-check" style="color: var(--emerald);"></i> Good (0-50) Clean Air';
+        aqiStatusElem.style.color = "var(--emerald)";
+      } else if (aqi <= 100) {
+        aqiValElem.style.color = "var(--amber)";
+        aqiIcon.style.color = "var(--amber)";
+        aqiStatusElem.innerHTML = '<i class="fa-solid fa-triangle-exclamation" style="color: var(--amber);"></i> Moderate (51-100)';
+        aqiStatusElem.style.color = "var(--amber)";
+      } else if (aqi <= 150) {
+        aqiValElem.style.color = "#ff9100";
+        aqiIcon.style.color = "#ff9100";
+        aqiStatusElem.innerHTML = '<i class="fa-solid fa-triangle-exclamation" style="color: #ff9100);"></i> Sensitive Alert (101-150)';
+        aqiStatusElem.style.color = "#ff9100";
+      } else {
+        aqiValElem.style.color = "var(--alert-red)";
+        aqiIcon.style.color = "var(--alert-red)";
+        aqiStatusElem.innerHTML = '<i class="fa-solid fa-circle-exclamation" style="color: var(--alert-red);"></i> Unhealthy / Poor Air';
+        aqiStatusElem.style.color = "var(--alert-red)";
+      }
+    }
+
+    function updateRelayUI(id, state, cardId, toggleId, statusId) {
+      const card = document.getElementById(cardId);
+      const toggle = document.getElementById(toggleId);
+      const status = document.getElementById(statusId);
+
+      if (state) {
+        card.classList.add('on');
+        toggle.checked = true;
+        status.innerText = "ON (Active)";
+        status.style.color = "var(--emerald)";
+      } else {
+        card.classList.remove('on');
+        toggle.checked = false;
+        status.innerText = "OFF";
+        status.style.color = "var(--text-muted)";
+      }
+    }
+
+    // -----------------------------------------------------------------------
+    // Animated Medical ECG Heartbeat Rhythm Line
+    // -----------------------------------------------------------------------
+    const canvas = document.getElementById('ecgCanvas');
+    const ctx = canvas.getContext('2d');
+    let x = 0;
+    let y = 40;
+    let ecgPoints = [];
+
+    function resizeCanvas() {
+      canvas.width = canvas.parentElement.clientWidth;
+      canvas.height = canvas.parentElement.clientHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    function drawECG() {
+      ctx.fillStyle = 'rgba(5, 10, 20, 0.15)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.strokeStyle = '#00e676';
+      ctx.lineWidth = 2.2;
+      ctx.shadowBlur = 8;
+      ctx.shadowColor = '#00e676';
+      ctx.beginPath();
+
+      const midY = canvas.height / 2;
+      x += 2.5;
+      if (x > canvas.width) {
+        x = 0;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      }
+
+      // Generate P-Q-R-S-T wave pulse periodically
+      const beatProgress = (x % 140);
+      let targetY = midY;
+
+      if (beatProgress > 30 && beatProgress < 40) {
+        targetY = midY - 6; // P Wave
+      } else if (beatProgress >= 40 && beatProgress < 45) {
+        targetY = midY + 4; // Q Wave
+      } else if (beatProgress >= 45 && beatProgress < 52) {
+        targetY = midY - 30; // R Peak
+      } else if (beatProgress >= 52 && beatProgress < 58) {
+        targetY = midY + 16; // S Wave
+      } else if (beatProgress >= 70 && beatProgress < 85) {
+        targetY = midY - 9; // T Wave
+      } else {
+        targetY = midY + (Math.random() * 2 - 1); // Baseline noise
+      }
+
+      ctx.moveTo(x - 2.5, y);
+      ctx.lineTo(x, targetY);
+      ctx.stroke();
+      y = targetY;
+
+      requestAnimationFrame(drawECG);
+    }
+    drawECG();
+
+    // Start Realtime Stream & Load USB Ports
+    loadAvailablePorts();
+    connectSSE();
+  </script>
+</body>
+</html>
