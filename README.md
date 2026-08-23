@@ -99,6 +99,12 @@ An assistive smart gesture glove and bedside ICU monitoring station designed for
 
 ---
 
+## 👨‍💻 Author
+
+- **Rudra Attri Pandey** (GitHub: [@voidreformer](https://github.com/voidreformer))
+
+---
+
 ## 🛡️ License
 
 This project is licensed under the MIT License.
