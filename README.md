@@ -15,7 +15,7 @@ An assistive smart gesture glove and bedside ICU monitoring station designed for
     - **Emergency Siren Trigger**: Hand tilt gesture triggers immediate audio alarm.
 
 - **Bedside Receiver & Actuation Hub (Receiver - RX)**:
-  - **Microcontroller**: Arduino Uno / Nano.
+  - **Microcontroller**: Arduino UNO Q (Main) & Arduino NANO (Supportive)
   - **Peripherals**: NRF24L01 transceiver, 3-channel relay module, MAX98357A I2S Class-D amplifier.
   - **Environmental Sensing**: DHT11 (Temp & Humidity), BMP280 (Atmospheric Pressure), SGP40 (Air Quality Index / VOC).
   - **Serial Telemetry**: JSON stream output over USB Serial to the Web Dashboard.
@@ -54,13 +54,13 @@ An assistive smart gesture glove and bedside ICU monitoring station designed for
 ### 1. Hardware Requirements & Wiring
 
 #### Transmitter (Smart Glove)
-- **Arduino Nano / Uno**
+- **Arduino NANO (Supportive)** / **Arduino UNO Q (Main)**
 - **NRF24L01 Module** (CE: Pin 9, CSN: Pin 10, SCK: Pin 13, MOSI: Pin 11, MISO: Pin 12)
 - **MPU6050 IMU** (SDA: A4, SCL: A5)
 - **3x Flex Sensors** (Pins A0, A1, A2 via voltage divider)
 
 #### Receiver (Bedside Station)
-- **Arduino Nano / Uno**
+- **Arduino UNO Q (Main) and Arduino NANO (supportive)**
 - **NRF24L01 Module** (CE: Pin 9, CSN: Pin 10, SCK: Pin 13, MOSI: Pin 11, MISO: Pin 12)
 - **3-Channel Relay Module** (IN1: Pin 3, IN2: Pin 4, IN3: Pin 5)
 - **MAX98357A I2S Amplifier** (BCLK: Pin 6, LRC: Pin 7, DIN: Pin 8)
