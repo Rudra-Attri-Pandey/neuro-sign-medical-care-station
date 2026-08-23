@@ -77,7 +77,7 @@ An assistive smart gesture glove and bedside ICU monitoring station designed for
 #### Running the Medical Station
 1. Clone this repository:
    ```bash
-   git clone https://github.com/voidreformer/neuro-sign-medical-care-station.git
+   git clone https://github.com/Rudra-Attri-Pandey/neuro-sign-medical-care-station.git
    cd neuro-sign-medical-care-station
    ```
 
@@ -101,7 +101,7 @@ An assistive smart gesture glove and bedside ICU monitoring station designed for
 
 ## 👨‍💻 Author
 
-- **Rudra Attri Pandey** (GitHub: [@voidreformer](https://github.com/voidreformer))
+- **Rudra Attri Pandey** (GitHub: [@Rudra-Attri-Pandey](https://github.com/Rudra-Attri-Pandey))
 
 ---
 
