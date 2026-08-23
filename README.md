@@ -54,13 +54,15 @@ An assistive smart gesture glove and bedside ICU monitoring station designed for
 ### 1. Hardware Requirements & Wiring
 
 #### Transmitter (Smart Glove)
-- **Arduino NANO (Supportive)** / **Arduino UNO Q (Main)**
+- **Arduino UNO Q (Main)**
+- **Arduino NANO (Supportive)**
 - **NRF24L01 Module** (CE: Pin 9, CSN: Pin 10, SCK: Pin 13, MOSI: Pin 11, MISO: Pin 12)
 - **MPU6050 IMU** (SDA: A4, SCL: A5)
 - **3x Flex Sensors** (Pins A0, A1, A2 via voltage divider)
 
 #### Receiver (Bedside Station)
-- **Arduino UNO Q (Main) and Arduino NANO (supportive)**
+- **Arduino UNO Q (Main)**
+- **Arduino NANO (Supportive)**
 - **NRF24L01 Module** (CE: Pin 9, CSN: Pin 10, SCK: Pin 13, MOSI: Pin 11, MISO: Pin 12)
 - **3-Channel Relay Module** (IN1: Pin 3, IN2: Pin 4, IN3: Pin 5)
 - **MAX98357A I2S Amplifier** (BCLK: Pin 6, LRC: Pin 7, DIN: Pin 8)
